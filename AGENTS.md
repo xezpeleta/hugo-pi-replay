@@ -44,8 +44,8 @@ Validate against it before embedding.
 
 | Field    | Type                     | Meaning |
 |----------|--------------------------|---------|
-| `cwd`    | string                   | Working dir, shown in the terminal header (tilde-ize freely). |
-| `model`  | string                   | `provider/model • thinkingLevel`, shown next to cwd. |
+| `cwd`    | string                   | Working dir, shown in the terminal footer. Optional: omit it if the host hides it (`hideCwd`). |
+| `model`  | string                   | `provider/model • thinkingLevel`, shown next to cwd. Optional: same treatment (`hideModel`). |
 | `prompt` | string                   | The user's task, typed verbatim. One or two sentences. |
 | `intro`  | string                   | One sentence of intent before the script streams ("I'll pull X and do Y"). |
 | `script` | array of `[class, text]` | The codemode script, tokenized for highlighting. See below. |
@@ -109,7 +109,9 @@ Work through this checklist on the scaffold:
 - [ ] `wallMs` — real total (from session timestamps), possibly scaled.
 - [ ] `output` — the interesting part of the final result, trimmed.
 - [ ] `answer` — your real final message, cut to ≤ 4 blocks.
-- [ ] `cwd`, `model` — as they really were; tilde-ize `cwd`.
+- [ ] `cwd`, `model` — as they really were; tilde-ize `cwd` (both fields are
+  optional — some hosts hide the footer labels entirely via `hideModel` /
+  `hideCwd`).
 
 ### 4. Validate
 

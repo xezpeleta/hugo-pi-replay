@@ -6,9 +6,11 @@ The smallest replay that still exercises the whole player: one prompt, a
 short codemode script streamed into the editor, no nested tool calls, and a
 two-block answer. The JSON is 60 lines — open
 [`replay.json`](replay.json) and every field should map to something you
-see animated here.
+see animated here, except `cwd` and `model`: this demo passes
+`hideModel` and `hideCwd`, so the terminal's footer labels stay out of
+the widget (the codemode replay shows the default, labelled look).
 
-{{< pi-replay data="replay.json" caption="A minimal hand-authored replay; about 60 lines of JSON.">}}
+{{< pi-replay data="replay.json" caption="A minimal hand-authored replay; about 60 lines of JSON." hideModel="true" hideCwd="true">}}
 > Use codemode to check whether the 10th Fibonacci number is even
 
 I'll compute the sequence up to the 10th term and check its parity.
@@ -31,8 +33,9 @@ The 10th Fibonacci number is 34, and it is even — 34 % 2 === 0.
 Fibonacci numbers are even exactly when their index is a multiple of three, so fib[9] was always going to be even.
 {{< /pi-replay >}}
 
-What you should see, in order: the terminal header (cwd, model), the prompt
-typed out, the intro sentence, the script streaming into the editor with
-syntax highlighting, the "tool calls" area staying closed (there are none),
-the spinner running to `wallMs`, then the output and the answer blocks
-fading in.
+What you should see, in order: the prompt typed out, the intro sentence,
+the script streaming into the editor with syntax highlighting, the "tool
+calls" area staying closed (there are none), the spinner running to
+`wallMs`, then the output and the answer blocks fading in — and no footer
+row below the editor, because `hideModel="true" hideCwd="true"` hides
+both labels (site-wide defaults exist too: `[params.piReplay]`).

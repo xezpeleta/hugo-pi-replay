@@ -5,3 +5,9 @@
 [module]
   [module.hugoVersion]
     min = "0.111.0"  # assets/js/*.js via js.Build, minify + fingerprint (no SCSS, extended build not required)
+
+# Site-wide defaults for the pi-replay shortcode's footer labels.
+# A per-shortcode hideModel="true" / hideCwd="true" overrides these.
+[params.piReplay]
+hideModel = false   # hide the model label in the terminal footer
+hideCwd = false     # hide the working-directory label in the terminal footer

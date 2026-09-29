@@ -9,11 +9,11 @@
   "properties": {
     "cwd": {
       "type": "string",
-      "description": "Working directory label shown in the terminal header, e.g. '~/Dev/blog (main)'."
+      "description": "Working-directory label shown in the terminal footer. Optional: omit it (or use the shortcode's hideCwd) to keep it out of the widget."
     },
     "model": {
       "type": "string",
-      "description": "Model label shown in the terminal header, e.g. 'claude-opus-5-5 • medium'."
+      "description": "Model label shown in the terminal footer, e.g. 'claude-opus-5-5 • medium'. Optional: omit it (or use the shortcode's hideModel) to keep it out of the widget."
     },
     "prompt": {
       "type": "string",
@@ -62,7 +62,7 @@
           },
           "args": {
             "type": "string",
-            "description": "Compact one-line rendering of the arguments, e.g. '{ team: "Pi", state: "open" }'. Truncated by ellipsis if too long — keep it short."
+            "description": "Compact one-line rendering of the arguments, e.g. '{ team: \"Pi\", state: \"open\" }'. Truncated by ellipsis if too long — keep it short."
           }
         }
       }

@@ -1,14 +1,30 @@
 {{- /* pi-replay: animated replay of a condensed coding-agent session.
   Usage:
-    {{< pi-replay data="replay.json" caption="..." >}}
+    {{< pi-replay data="replay.json" caption="..." hideModel="true" hideCwd="true" >}}
       plain-text fallback transcript (shown without JS / in feeds)
     {{< /pi-replay >}}
 
   `data` is resolved as a page resource (place the JSON in the post's page
   bundle, next to index.md) unless it is an absolute URL/path.
+  `hideModel` / `hideCwd` hide the terminal footer labels; they default to
+  the site params [params.piReplay] hideModel / hideCwd (both false).
 */ -}}
 {{- $data := or (.Get "data") (.Get 0) -}}
 {{- $caption := .Get "caption" -}}
+{{- /* Footer labels: shortcode param ("true"/"false") wins over the site
+     params [params.piReplay] hideModel / hideCwd. */ -}}
+{{- $hideModel := false -}}
+{{- with .Get "hideModel" -}}
+  {{- $hideModel = ne (lower .) "false" -}}
+{{- else -}}
+  {{- $hideModel = site.Params.piReplay.hideModel | default false -}}
+{{- end -}}
+{{- $hideCwd := false -}}
+{{- with .Get "hideCwd" -}}
+  {{- $hideCwd = ne (lower .) "false" -}}
+{{- else -}}
+  {{- $hideCwd = site.Params.piReplay.hideCwd | default false -}}
+{{- end -}}
 {{- if not $data -}}
   {{- errorf "pi-replay: the `data` parameter is required, e.g. {{< pi-replay data=\"replay.json\" >}}" -}}
 {{- end -}}
@@ -22,7 +38,7 @@
     {{- errorf "pi-replay: data file %q not found among the page resources of %s. Put the JSON in the post's page bundle (next to index.md) or pass an absolute URL." $data .Page.File.Path -}}
   {{- end -}}
 {{- end -}}
-<figure class="post-figure pi-replay" data-pi-replay="{{ $url }}">
+<figure class="post-figure pi-replay" data-pi-replay="{{ $url }}"{{ if $hideModel }} data-hide-model="true"{{ end }}{{ if $hideCwd }} data-hide-cwd="true"{{ end }}>
   {{/* .Inner is delivered as template.HTML (raw, unescaped); escape it once,
       then mark the result safe so html/template does not double-escape. */}}
   <pre class="pi-replay__fallback">{{ .Inner | htmlEscape | safeHTML }}</pre>

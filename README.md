@@ -98,15 +98,30 @@ const script = "that was streamed";   // plain-text fallback transcript
 - `data` (or positional `{{< pi-replay "replay.json" >}}`) — a page
   resource in the same bundle, or an absolute URL/path.
 - `caption` — optional `<figcaption>`.
+- `hideModel`, `hideCwd` — pass `"true"` to hide the model /
+  working-directory labels in the terminal footer for this widget.
 - The inner content is the **no-JS fallback**: a plain-text transcript,
   HTML-escaped by the shortcode. Keep it a faithful summary of the JSON.
+
+Site-wide defaults can be set in your site config:
+
+```toml
+[params.piReplay]
+hideModel = true   # hide the model label in every widget's footer
+hideCwd = true     # hide the working-directory label in every widget's footer
+```
+
+Per-shortcode parameters override the site-wide defaults. Hiding is
+presentation-only — the labels remain part of the fetched JSON; omit the
+`cwd` / `model` fields from the JSON if you don't want them in the payload
+at all (both fields are optional).
 
 ## The replay format (short version)
 
 ```jsonc
 {
-  "cwd": "~/Dev/project",             // shown in the terminal header
-  "model": "provider/model • level",  // shown in the terminal header
+  "cwd": "~/Dev/project",             // footer label (optional; hide with hideCwd)
+  "model": "provider/model • level",  // footer label (optional; hide with hideModel)
   "prompt": "…",                      // typed out verbatim
   "intro": "…",                       // one sentence before the script runs
   "script": [["k","const"], …],       // codemode script, tokenized (see below)

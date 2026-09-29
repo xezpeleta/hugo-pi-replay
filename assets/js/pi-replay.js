@@ -35,6 +35,10 @@
   function PiReplay(figure, data) {
     this.figure = figure;
     this.data = data;
+    // Footer-label visibility: data-hide-model / data-hide-cwd attributes on
+    // the shortcode element, or simply omitting the fields from the JSON.
+    this.hideModel = figure.hasAttribute('data-hide-model') || !data.model;
+    this.hideCwd = figure.hasAttribute('data-hide-cwd') || !data.cwd;
     this.run = 0;
     this.spinnerTimer = null;
     this.followOutput = true;
@@ -61,13 +65,13 @@
     editor.appendChild(node('span', 'pi-replay__cursor', ' '));
 
     var footer = node('div', 'pi-replay__footer');
-    footer.appendChild(node('span', null, this.data.cwd));
-    footer.appendChild(node('span', null, this.data.model));
+    if (!this.hideCwd) footer.appendChild(node('span', null, this.data.cwd));
+    if (!this.hideModel) footer.appendChild(node('span', null, this.data.model));
 
     root.appendChild(this.chat);
     root.appendChild(this.status);
     root.appendChild(editor);
-    root.appendChild(footer);
+    if (footer.childNodes.length) root.appendChild(footer);
 
     this.button = node('button', 'pi-replay__button', 'Skip');
     this.button.type = 'button';
