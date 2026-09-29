@@ -129,11 +129,14 @@ def collect(session, events):
     for e in events:
         if e.get("type") == "model_change":
             out["model"] = "%s/%s" % (e.get("provider", ""), e.get("modelId", ""))
+    final_level = ""
     for e in events:
         if e.get("type") == "thinking_level_change":
             level = e.get("thinkingLevel", "")
             if level:
-                out["model"] = (out["model"] + " • " + level).strip(" •")
+                final_level = level  # only the last one is in effect
+    if final_level:
+        out["model"] = (out["model"] + " • " + final_level).strip(" •")
 
     saw_tool = False
     intro_done = False

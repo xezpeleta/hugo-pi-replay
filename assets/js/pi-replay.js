@@ -160,6 +160,9 @@
     var output = node('pre', 'pi-replay__output');
     calls.hidden = true;
     output.hidden = true;
+    if (!this.data.script || !this.data.script.length) {
+      code.hidden = true; // chat-style sessions have no codemode script
+    }
     box.appendChild(code);
     box.appendChild(calls);
     box.appendChild(output);
@@ -245,7 +248,7 @@
     this.playing = false;
     this.reset();
     this.addUser();
-    this.addIntro().textContent = this.data.intro;
+    this.addIntro().textContent = this.data.intro || '';
     this.addTool();
     this.renderScript(this.scriptLength);
     this.renderCalls(Infinity);
@@ -291,7 +294,7 @@
 
     await this.wait(run, 900);
     var intro = this.addIntro();
-    var words = data.intro.split(' ');
+    var words = (this.data.intro || '').split(' ');
     for (i = 1; i <= words.length; i++) {
       intro.textContent = words.slice(0, i).join(' ');
       this.scrollToEnd();
