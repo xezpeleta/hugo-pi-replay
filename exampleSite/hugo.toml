@@ -1,0 +1,14 @@
+# exampleSite configuration for hugo-pi-replay.
+# Served by ../demo.sh; the theme is resolved via --themesDir.
+
+baseURL = "https://example.org/"
+languageCode = "en"
+title = "hugo-pi-replay demo"
+
+theme = "hugo-pi-replay"
+
+disableKinds = ["taxonomy", "term"]
+
+[markup]
+  [markup.highlight]
+    noClasses = false

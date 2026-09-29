@@ -1,0 +1,20 @@
+hugo-pi-replay
+Copyright 2025 Xezpeleta
+
+This product includes software developed by Earendil Works
+(https://earendil.com) for the earendil.com website
+(https://github.com/earendil-works/website), licensed under the
+Apache License, Version 2.0:
+
+  * assets/js/pi-replay.js  — adapted from _static/script.js (PiReplay player)
+  * assets/css/pi-replay.css — adapted from _static/prose.css (pi-replay rules)
+  * exampleSite/content/posts/codemode-replay/codemode-replay.json —
+    example replay data from the post "You Said No MCP!"
+
+Changes in this module: the player is shipped standalone (no htmx
+dependency; boots on DOMContentLoaded), the styles are scoped to work
+outside a `.prose` container with dark-mode aliases for common themes,
+plus a shortcode, a head partial, a JSON schema and a session converter.
+
+All contributions to this module are licensed under the Apache License,
+Version 2.0 (see LICENSE).

@@ -1,0 +1,7 @@
+# Hugo module/component metadata for hugo-pi-replay.
+# Works both as a Hugo Module (hugo mod get) and as a theme component
+# (git submodule under themes/ + `theme = [ ..., "hugo-pi-replay" ]`).
+
+[module]
+  [module.hugoVersion]
+    min = "0.111.0"  # assets/js/*.js via js.Build, minify + fingerprint (no SCSS, extended build not required)

@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/xezpeleta/hugo-pi-replay/schemas/replay.schema.json",
+  "title": "pi-replay session",
+  "description": "A condensed, authored summary of a real coding-agent (Pi) session, replayed as an animated terminal by hugo-pi-replay. See AGENTS.md for authoring rules. The golden rule: every result, number and string must come from the real session — condense, never fabricate.",
+  "type": "object",
+  "required": ["prompt", "intro", "script", "calls", "wallMs", "output", "answer"],
+  "additionalProperties": false,
+  "properties": {
+    "cwd": {
+      "type": "string",
+      "description": "Working directory label shown in the terminal header, e.g. '~/Dev/blog (main)'."
+    },
+    "model": {
+      "type": "string",
+      "description": "Model label shown in the terminal header, e.g. 'claude-opus-5-5 • medium'."
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The user's request, verbatim. Typed character by character (18ms/char)."
+    },
+    "intro": {
+      "type": "string",
+      "description": "One or two sentences: what the agent is about to do. Typed word by word (35ms/word). Keep it short."
+    },
+    "script": {
+      "type": "array",
+      "description": "Syntax-highlighted codemode script, streamed into the editor at ~0.9 chars/ms. Concatenating all token texts must yield valid JavaScript.",
+      "items": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "string",
+            "enum": ["", "k", "f", "s", "n", "c", "p"],
+            "description": "Token class: k keyword, f function, s string, n number, c comment, p punctuation, '' plain."
+          },
+          { "type": "string", "description": "Token text (may be empty)." }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "calls": {
+      "type": "array",
+      "description": "Nested tool calls made while the script ran, sorted by start time. Calls whose t+d exceeds ~2.5s of replay time are fast-forwarded; keep the earliest ones at real speed and sample the rest.",
+      "items": {
+        "type": "object",
+        "required": ["t", "d", "name", "args"],
+        "additionalProperties": false,
+        "properties": {
+          "t": {
+            "type": "number",
+            "description": "Start time in ms, relative to the start of the codemode run (script begins typing at t=0). Monotonically increasing."
+          },
+          "d": {
+            "type": "number",
+            "description": "Duration in ms. A check mark appears when simulated time reaches t+d."
+          },
+          "name": {
+            "type": "string",
+            "description": "Tool name exactly as the real session recorded it, e.g. 'mcp__linear__list_issues'."
+          },
+          "args": {
+            "type": "string",
+            "description": "Compact one-line rendering of the arguments, e.g. '{ team: "Pi", state: "open" }'. Truncated by ellipsis if too long — keep it short."
+          }
+        }
+      }
+    },
+    "wallMs": {
+      "type": "number",
+      "description": "Total wall-clock duration of the codemode run in ms; must be >= every call's t+d. After this the tool box closes."
+    },
+    "output": {
+      "type": "string",
+      "description": "Final output/return value of the tool run, shown verbatim (JSON pretty-printed is typical)."
+    },
+    "answer": {
+      "type": "array",
+      "description": "1-4 authored answer blocks, minimal inline HTML only: <b>, <code>, <em>. Each block is [\"p\", html] or [\"ul\", [item, item, ...]].",
+      "items": {
+        "oneOf": [
+          {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "prefixItems": [
+              { "const": "p" },
+              { "type": "string", "description": "Paragraph HTML." }
+            ]
+          },
+          {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "prefixItems": [
+              { "const": "ul" },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "description": "List item HTML." }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

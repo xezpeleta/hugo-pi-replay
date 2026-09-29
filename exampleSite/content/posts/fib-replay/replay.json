@@ -1,0 +1,249 @@
+{
+  "cwd": "~/scratch",
+  "model": "demo-model • medium",
+  "prompt": "Use codemode to check whether the 10th Fibonacci number is even",
+  "intro": "I'll compute the sequence up to the 10th term and check its parity.",
+  "script": [
+    [
+      "k",
+      "const"
+    ],
+    [
+      "",
+      " fib"
+    ],
+    [
+      "p",
+      " ="
+    ],
+    [
+      "p",
+      " ["
+    ],
+    [
+      "n",
+      "0"
+    ],
+    [
+      "p",
+      ","
+    ],
+    [
+      "n",
+      " 1"
+    ],
+    [
+      "p",
+      "];"
+    ],
+    [
+      "k",
+      "\nwhile"
+    ],
+    [
+      "p",
+      " ("
+    ],
+    [
+      "",
+      "fib"
+    ],
+    [
+      "p",
+      "."
+    ],
+    [
+      "",
+      "length"
+    ],
+    [
+      "p",
+      " <"
+    ],
+    [
+      "n",
+      " 10"
+    ],
+    [
+      "p",
+      ")"
+    ],
+    [
+      "p",
+      " {"
+    ],
+    [
+      "",
+      "\n  fib"
+    ],
+    [
+      "p",
+      "."
+    ],
+    [
+      "f",
+      "push"
+    ],
+    [
+      "p",
+      "("
+    ],
+    [
+      "",
+      "fib"
+    ],
+    [
+      "p",
+      "."
+    ],
+    [
+      "f",
+      "at"
+    ],
+    [
+      "p",
+      "(-"
+    ],
+    [
+      "n",
+      "1"
+    ],
+    [
+      "p",
+      ")"
+    ],
+    [
+      "p",
+      " +"
+    ],
+    [
+      "",
+      " fib"
+    ],
+    [
+      "p",
+      "."
+    ],
+    [
+      "f",
+      "at"
+    ],
+    [
+      "p",
+      "(-"
+    ],
+    [
+      "n",
+      "2"
+    ],
+    [
+      "p",
+      "));"
+    ],
+    [
+      "p",
+      "\n}"
+    ],
+    [
+      "k",
+      "\nconst"
+    ],
+    [
+      "",
+      " n"
+    ],
+    [
+      "p",
+      " ="
+    ],
+    [
+      "",
+      " fib"
+    ],
+    [
+      "p",
+      "."
+    ],
+    [
+      "f",
+      "at"
+    ],
+    [
+      "p",
+      "(-"
+    ],
+    [
+      "n",
+      "1"
+    ],
+    [
+      "p",
+      ");"
+    ],
+    [
+      "k",
+      "\nreturn"
+    ],
+    [
+      "p",
+      " {"
+    ],
+    [
+      "",
+      " n"
+    ],
+    [
+      "p",
+      ","
+    ],
+    [
+      "",
+      " even"
+    ],
+    [
+      "p",
+      ":"
+    ],
+    [
+      "",
+      " n"
+    ],
+    [
+      "p",
+      " %"
+    ],
+    [
+      "n",
+      " 2"
+    ],
+    [
+      "p",
+      " ==="
+    ],
+    [
+      "n",
+      " 0"
+    ],
+    [
+      "p",
+      " };"
+    ],
+    [
+      "",
+      "\n"
+    ]
+  ],
+  "calls": [],
+  "wallMs": 1800,
+  "output": "{\n  \"n\": 34,\n  \"even\": true\n}",
+  "answer": [
+    [
+      "p",
+      "The 10th Fibonacci number is <b>34</b>, and it is <b>even</b> — <code>34 % 2 === 0</code>."
+    ],
+    [
+      "p",
+      "Fibonacci numbers are even exactly when their index is a multiple of three, so <code>fib[9]</code> was always going to be even."
+    ]
+  ]
+}

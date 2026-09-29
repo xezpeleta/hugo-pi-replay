@@ -1,0 +1,32 @@
+{{- /* pi-replay: animated replay of a condensed coding-agent session.
+  Usage:
+    {{< pi-replay data="replay.json" caption="..." >}}
+      plain-text fallback transcript (shown without JS / in feeds)
+    {{< /pi-replay >}}
+
+  `data` is resolved as a page resource (place the JSON in the post's page
+  bundle, next to index.md) unless it is an absolute URL/path.
+*/ -}}
+{{- $data := or (.Get "data") (.Get 0) -}}
+{{- $caption := .Get "caption" -}}
+{{- if not $data -}}
+  {{- errorf "pi-replay: the `data` parameter is required, e.g. {{< pi-replay data=\"replay.json\" >}}" -}}
+{{- end -}}
+{{- $url := "" -}}
+{{- if or (strings.HasPrefix $data "http://") (strings.HasPrefix $data "https://") (strings.HasPrefix $data "/") -}}
+  {{- $url = $data -}}
+{{- else -}}
+  {{- with .Page.Resources.GetMatch $data -}}
+    {{- $url = .RelPermalink -}}
+  {{- else -}}
+    {{- errorf "pi-replay: data file %q not found among the page resources of %s. Put the JSON in the post's page bundle (next to index.md) or pass an absolute URL." $data .Page.File.Path -}}
+  {{- end -}}
+{{- end -}}
+<figure class="post-figure pi-replay" data-pi-replay="{{ $url }}">
+  {{/* .Inner is delivered as template.HTML (raw, unescaped); escape it once,
+      then mark the result safe so html/template does not double-escape. */}}
+  <pre class="pi-replay__fallback">{{ .Inner | htmlEscape | safeHTML }}</pre>
+  {{- with $caption -}}
+    <figcaption>{{ . }}</figcaption>
+  {{- end -}}
+</figure>

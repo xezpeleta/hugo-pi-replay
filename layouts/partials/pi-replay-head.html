@@ -1,0 +1,22 @@
+{{- /* pi-replay-head: conditionally loads the player assets into <head>.
+  Include it from your head partial — with PaperMod, from
+  layouts/partials/extend_head.html:
+
+      {{ partial "pi-replay-head.html" . }}
+
+  Assets load only on pages that actually use the pi-replay shortcode.
+*/ -}}
+{{- $used := .HasShortcode "pi-replay" -}}
+{{- if not $used -}}
+  {{- with .Content -}}
+    {{- if findRE `data-pi-replay=` . 1 -}}
+      {{- $used = true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if $used -}}
+  {{- $css := resources.Get "css/pi-replay.css" | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+  {{- $js := resources.Get "js/pi-replay.js" | js.Build | minify | fingerprint -}}
+  <script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- end -}}

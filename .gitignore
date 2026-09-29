@@ -1,0 +1,5 @@
+/public/
+/resources/
+.hugo_build.lock
+*.orig
+__pycache__/
